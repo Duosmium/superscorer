@@ -25,7 +25,7 @@ try:
     drops = int(loaded["Tournament"]["worst placings dropped"])
 except KeyError:
     drops = 0
-mins: dict[str, dict[str, int]] = {}
+mins = {}
 for idx in table.index:
     school_list = table["Team"][idx].split("  ")
     school = school_list[0]
