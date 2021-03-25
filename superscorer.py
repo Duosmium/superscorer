@@ -8,7 +8,7 @@ pandas.options.mode.chained_assignment = None
 
 tournament: str = ""
 try:
-    tournament: str = sys.argv[1]
+    tournament: str = sys.argv[1].split("/")[-1]
 except IndexError:
     print("No tournament (e.g. 2019-06-01_nationals_c) provided!")
     exit(1)

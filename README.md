@@ -3,9 +3,9 @@
 Usage:
 
 ```bash
-python superscorer.py name
+python superscorer.py url
 ```
 
-where `name` is the Duosmium URL of the tournament, following `duosmium.org/results` (e.g. `2019-06-01_nationals_c`).
+where `name` is the Duosmium URL of the tournament.
 
 Dependencies include `pandas`, `requests`, and `PyYAML`.
