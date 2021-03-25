@@ -4,6 +4,8 @@ import pandas
 import yaml
 import re
 
+pandas.options.mode.chained_assignment = None
+
 tournament: str = ""
 try:
     tournament: str = sys.argv[1]
@@ -37,16 +39,26 @@ for idx in table.index:
         if evt not in mins[f"{school} ({state})"].keys():
             mins[f"{school} ({state})"][evt] = table[evt][idx]
         else:
-            mins[f"{school} ({state})"][evt] = min(table[evt][idx], mins[f"{school} ({state})"][evt])
-input_list = [[school, "0", "0"] + [str(mins[school][evt]).replace("*", "") for evt in events] + [str(mins[school][evt]).replace("*", "") for evt in trials] + [str(mins[school]["Team Penalties"])] for school in mins]
+            mins[f"{school} ({state})"][evt] = min(
+                table[evt][idx], mins[f"{school} ({state})"][evt]
+            )
+input_list = [
+    [school, "0", "0"]
+    + [str(mins[school][evt]).replace("*", "") for evt in events]
+    + [str(mins[school][evt]).replace("*", "") for evt in trials]
+    + [str(mins[school]["Team Penalties"])]
+    for school in mins
+]
 df = pandas.DataFrame(input_list, columns=full)
 for idx in df.index:
+
     def calculate_score():
         counted = [int(df[evt][idx].replace("*", "")) for evt in events]
         score = sum(counted)
         if drops > 0:
             score -= sum(sorted(counted)[:-(drops)])
         return score
+
     df["Score"][idx] = str(calculate_score())
 df = df.astype({"Score": int})
 df.sort_values(by="Score", inplace=True)
